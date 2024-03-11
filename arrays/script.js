@@ -2,15 +2,20 @@ const array =  [16,-37,54,-4,72,-56,47,4, -16,25,-37,46,4,-51,27,-63,4,-54,76,-4
 
 // 1 
 
-let sum = 0;
-let count = 0;
 const result = array.reduce(function(acc, current) {
     if(current > 0){
-       sum += current;
-       count++
+       return acc + current;
+    } else {
+       return acc;
     }
-},0)
-console.log(sum, count)
+}, 0);
+
+const count = array.filter(function(num) {
+    return num > 0;
+}).length;
+
+console.log(result, count);
+
 
 // 2
 
@@ -40,33 +45,39 @@ console.log(maxNumber, maxIndex)
 
 // 4 
 
-let countNegative = 0;
-const res = array.reduce(function(acc, current) {
+const countNegative = array.reduce(function(acc, current) {
     if(current < 0){
-       countNegative++
+       return acc + 1
+    }
+    else{
+        return acc
     }
 },0)
 console.log(countNegative)
 
 // 5 
 
-let oddNumbers = 0;
 const countOdd = array.reduce(function(acc, current) {
     if(current > 0 && current % 2 !== 0){
-        oddNumbers++
+        return acc + 1
+    }
+    else{
+        return acc
     }
 },0)
-console.log(oddNumbers)
+console.log(countOdd)
 
 // 6
 
-let evenNumbers = 0;
 const countEven = array.reduce(function(acc, current) {
     if(current > 0 && current % 2 == 0){
-        evenNumbers++
+        return acc + 1;
+    }
+    else{
+        return acc
     }
 }, 0)
-console.log(evenNumbers)
+console.log(countEven)
 
 // 7 
 
