@@ -1,0 +1,54 @@
+body{
+    font-family: sans-serif;
+}
+
+img{
+    width: 500px;
+    height: auto;
+}
+button{
+    width: 150px;
+    height: 30px;
+    font-size: 16px;
+    background-color: rgb(15, 244, 168);
+    border: 0;
+    border-radius: 5px;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+    width: 600px;
+    padding: 10px;
+    margin: 50px 5px;
+}
+.full-name-field{
+    width: 300px;
+}
+.pay-radio-btn{
+    display: block;
+}
+.form-label{
+    margin-top: 30px;
+    display: block;
+}
+.main-container{
+    display: flex;
+}
+.description-box{
+    display: flex;
+    flex-direction: column;
+}
+.description-box p {
+    width: 700px;
+    line-height: 1.4;
+    margin-top: 50px;
+}
+.form-label textarea{
+    display: block;
+    margin-bottom: 10px;
+    width: 580px;
+    height: 140px;
+    resize: none;
+    overflow: auto;
+}
