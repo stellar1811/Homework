@@ -18,9 +18,11 @@ sendButton.addEventListener('click', (event) => {
 
     formData.forEach((value, key) => {
         if (key === 'fullName' && value.trim() === '') {
-            errorMessages[0].textContent = 'Вам потрібно ввести ПІБ!';
-            isTrue = false;
-            };
+            if (value === '') {
+                errorMessages[0].textContent = 'Вам потрібно ввести ПІБ!';
+                isTrue = false;
+            }
+        };
             
         if (key === 'numberPost') {
             if (value === '') {
