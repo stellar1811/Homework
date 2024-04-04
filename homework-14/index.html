@@ -19,6 +19,7 @@
     <form id="form" style="display: none;">
         <label class="form-label"> ПІБ: 
             <input class="full-name-field" type="text" name="fullName"/>
+            <span class ="error-message"></span>
         </label>
         <label class="form-label"> Місто:
             <select name="selectCity">
@@ -30,10 +31,11 @@
         </label>
         <label class="form-label"> Номер поштового відділення:
             <input type="number" name="numberPost">
+            <span class ="error-message"></span>
         </label> 
         <label class="form-label"> Спосіб оплати:
             <label class="pay-radio-btn"> 
-                <input  type="radio" name="payment" value="card" />
+                <input  type="radio" name="payment" value="card" checked />
                 Банківська картка
             </label> 
             <label class="pay-radio-btn"> 
@@ -43,6 +45,7 @@
         </label>  
         <label class="form-label"> Введіть кількість продукції:
             <input type="number" name="quontity">
+            <span class ="error-message"></span>
         </label>
         <label class="form-label"> 
             Коментар до замовлення:
@@ -51,12 +54,8 @@
         <button id ="sendButton">Відправити</button>
     </form>
 
-
-
-
-
-
-
+   
+    <p class="result-message" style="display: none;"></p>
 
     <script src="script.js"></script>
 

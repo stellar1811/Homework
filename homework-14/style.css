@@ -22,6 +22,19 @@ form{
     padding: 10px;
     margin: 50px 5px;
 }
+span{
+    display: block;
+    color: red;
+    font-size: 12px;
+    margin-top: 10px;
+}
+.result-message{
+  font-size: 16px;
+  margin-left: 10px;  
+  background-color: rgb(183, 255, 183);
+  display: inline-block;
+  padding: 10px;
+}
 .full-name-field{
     width: 300px;
 }
