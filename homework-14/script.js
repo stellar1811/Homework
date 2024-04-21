@@ -9,133 +9,101 @@ buyButton.addEventListener('click', () => {
     form.style.display = 'block'
 }) 
 
-let isTrue = true; 
-function checkFullName(value, key) {
-    if (key === 'fullName') {
-        if (value === '') {
-            errorMessages[0].textContent = 'Вам потрібно ввести ПІБ!';
-            isTrue = false;
-        }
+const fullNamePattern = /^[А-ЯІЇЄҐ][а-яіїєґ' ]+[А-ЯІЇЄҐ][а-яіїєґ' ]+[А-ЯІЇЄҐ][а-яіїєґ' ]+$/;
+const emailPattern = /^[A-Za-z0-9._%+-]+@[a-z]+\.[a-z]+$/;
+const phoneNumberPattern = /^(\+?38)?(\-\s)?0\d{9,}$/;
 
-        const fullName = value;
-        const pattern = /^[А-ЯІЇЄҐ][а-яіїєґ' ]+[А-ЯІЇЄҐ][а-яіїєґ' ]+[А-ЯІЇЄҐ][а-яіїєґ' ]+$/;
-        const isFieldValid = pattern.test(fullName);
+const errorMessagesEmptyList = [
+    'Вам потрібно ввести ПІБ!',
+    'Вам потрібно ввести номер поштового відділення!',
+    'Вам потрібно ввести кількість!',
+    'Вам потрібно ввести електронну пошту!',
+    'Вам потрібно ввести номер телефону!'
+]
 
-        if(isFieldValid){
-            errorMessages[0].textContent = ''
+const errorMessagesInvalidList = [
+    'Невірно введене ПІБ!',
+    'Номер поштового відділення повинен бути більше 0!', 
+    'Кількість повинна бути більше 0!',
+    'Невірно введена електронна пошта',
+    'Невірно введений номер!'
+]
+
+function checkField(value, pattern, emptyMessage, invalidMessage, messageIndex){
+    let isFieldValid = true; 
+    if (value === '') {
+        errorMessages[messageIndex].textContent = emptyMessage[messageIndex];
+        isFieldValid = false;
+    }
+    else{
+        const validField = pattern.test(value);
+        if(validField){
+            errorMessages[messageIndex].textContent = ''
         } else{
-            errorMessages[0].textContent = 'Невірно введене ПІБ!'
-            isTrue = false;
+            errorMessages[messageIndex].textContent = invalidMessage[messageIndex];
+            isFieldValid = false;
         }
     }
-    return isTrue
+    return isFieldValid;
 }
-
-function checkNumberPost(value, key) {
-    if (key === 'numberPost') {
-        if (value === '') {
-            errorMessages[1].textContent = 'Вам потрібно ввести номер поштового відділення!';
-            isTrue = false;
-        } else if (value <= 0) {
-            errorMessages[1].textContent = 'Номер поштового відділення повинен бути більше 0!';
-            isTrue = false;
-        } else {
-            errorMessages[1].textContent = '';
-            isTrue = true;
-        }
-        
-    }
-    return isTrue
-}
-
-function checkQuantity(value, key){ 
-    if (key === 'quantity') {
-        if (value === '') {
-            errorMessages[2].textContent = 'Вам потрібно ввести кількість!';
-            isTrue = false;
-        } else if (value <= 0) {
-            errorMessages[2].textContent = 'Кількість повинна бути більше 0!';
-            isTrue = false;
-        } else {
-            errorMessages[2].textContent = '';
-            isTrue = true;
-        }
-    }
-    return isTrue
-}
-
-function checkEmail(value, key){
-    if (key === 'email') {
-        if (value === '') {
-            errorMessages[3].textContent = 'Вам потрібно ввести електронну пошту!';
-            isTrue = false;
-        }
-
-        const email = value;
-        const pattern = /^[A-Za-z0-9._%+-]+@[a-z]+\.[a-z]+$/;
-        const isFieldValid = pattern.test(email);
-
-        if(isFieldValid){
-            errorMessages[3].textContent = ''
-        } else{
-            errorMessages[3].textContent = 'Невірно введена електронна пошта';
-            isTrue = false
-        }
-    }
-    return isTrue
-}
-
-function checkPhoneNumber(value, key){
-    if (key === 'phone-number') {
-        if (value === '') {
-            errorMessages[4].textContent = 'Вам потрібно ввести номер телефону!';
-            isTrue = false;
-        }
-        const phoneNumber = value;
-        const pattern = /^(\+?38)?(\-\s)?0\d{9,}$/
-        const isFieldValid = pattern.test(phoneNumber);
-        if(isFieldValid){
-            errorMessages[4].textContent = ''
-        } else{
-            errorMessages[4].textContent = 'Невірно введений номер!';
-            isTrue = false
-        }  
-    }
-    return isTrue
-}
-
-
+    
 sendButton.addEventListener('click', (event) => {
     
     event.preventDefault();
     const formData = new FormData(form);
+    let isValid = true;
 
     formData.forEach((value, key) => {
-        checkFullName(value, key);
-        checkNumberPost (value, key);
-        checkQuantity(value, key);
-        checkEmail(value, key);
-        checkPhoneNumber(value, key);
-    });
-
-    if(isTrue) {
-        form.style.display = 'none';
-
-        errorMessages.forEach(errorMessage => {
-            errorMessage.textContent = '';
-        });
-
-        resultMessage.style.display = 'block'
-        const fullName = formData.get('fullName');
-        const selectedCity = document.querySelector('[name="selectCity"]').selectedOptions[0].textContent;
-        const numberPost = formData.get('numberPost');
-        const quantity = formData.get('quantity');
-        const payment = formData.get('payment');
-        const email = formData.get('email');
-        const phoneNumber = formData.get('phone-number');
-
-
-        resultMessage.textContent = `Замовлення успішно оформлено! Інформація про замовлення: замовник: ${fullName}. Місто: ${selectedCity}, номер відділення ${numberPost}. Кількість: ${quantity}. Спосіб оплати: ${payment}. Електронна пошта: ${email}. Мобільний номер: ${phoneNumber}.`
-    }
-
+        if(key === 'fullName') {
+                isValid = checkField(value, fullNamePattern, errorMessagesEmptyList, errorMessagesInvalidList, 0)
+           };
+        if(key === 'numberPost') {
+            if(value !== '' && value <= 0){
+                errorMessages[1].textContent = 'Номер пошти повинен бути більше 0!';
+            } else {
+                errorMessages[1].textContent = ''
+                isValid = checkField(value,'', errorMessagesEmptyList, errorMessagesInvalidList, 1);
+            }
+        };
+        if(key === 'quantity') {
+            if(value !== '' && value <= 0){
+                    errorMessages[2].textContent = 'Кількість повинна бути більше 0!';
+                } else {
+                    errorMessages[2].textContent = ''
+                    isValid = checkField(value,'', errorMessagesEmptyList, errorMessagesInvalidList, 2);
+                }
+            }
+        if(key === 'email') {
+            isValid = checkField(value, emailPattern, errorMessagesEmptyList, errorMessagesInvalidList, 3)
+        };
+        if(key === 'phoneNumber') {
+            isValid = checkField(value, phoneNumberPattern, errorMessagesEmptyList, errorMessagesInvalidList, 4)
+        } 
+    
+    })
+        if(isValid) {
+            form.style.display = 'none';
+    
+            errorMessages.forEach(errorMessage => {
+                errorMessage.textContent = '';
+            });
+    
+            resultMessage.style.display = 'block'
+            const fullName = formData.get('fullName');
+            const selectedCity = document.querySelector('[name="selectCity"]').selectedOptions[0].textContent;
+            const numberPost = formData.get('numberPost');
+            const quantity = formData.get('quantity');
+            const payment = formData.get('payment');
+            const email = formData.get('email');
+            const phoneNumber = formData.get('phoneNumber');
+    
+            resultMessage.textContent = `Замовлення успішно оформлено! Інформація про замовлення: замовник: ${fullName}. Місто: ${selectedCity}, номер відділення ${numberPost}. Кількість: ${quantity}. Спосіб оплати: ${payment}. Електронна пошта: ${email}. Мобільний номер: ${phoneNumber}.`
+        }
 })
+
+
+
+        
+
+        
+
