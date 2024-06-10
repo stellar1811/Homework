@@ -1,9 +1,9 @@
-import './Input.css'
+import './Input.css';
 
-const Input = () => {
-    return <label className="label-input"> Name:
-        <input type="text"></input>
-    </label>
+function Input() {
+    return <label className="label-input">
+        Name:<input type="text" />
+    </label>;
 }
 
 export default Input;
