@@ -1,0 +1,7 @@
+.Navbar{
+    height: 100vh;
+}
+.Navbar ul li{
+    list-style: none;
+    margin-bottom: 10px;
+}

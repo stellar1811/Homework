@@ -1,0 +1,13 @@
+.Main-content{
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+
+    background-image: url('shop.png');
+    background-repeat: no-repeat;
+    background-size: 800px auto; 
+    background-position: center;
+
+    padding: 50px;
+    box-sizing: border-box;
+}
